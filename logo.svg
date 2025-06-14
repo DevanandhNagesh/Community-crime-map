@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Background Circle -->
+    <circle cx="100" cy="100" r="90" fill="#2563EB"/>
+    
+    <!-- Shield Shape -->
+    <path d="M100 20L140 40V80C140 120 120 140 100 160C80 140 60 120 60 80V40L100 20Z" fill="white"/>
+    
+    <!-- Location Pin -->
+    <path d="M100 60C88.954 60 80 68.954 80 80C80 91.046 88.954 100 100 100C111.046 100 120 91.046 120 80C120 68.954 111.046 60 100 60Z" fill="#2563EB"/>
+    
+    <!-- Alert Circle -->
+    <circle cx="100" cy="40" r="8" fill="#EF4444"/>
+    
+    <!-- Checkmark -->
+    <path d="M85 90L95 100L115 80" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg> 
