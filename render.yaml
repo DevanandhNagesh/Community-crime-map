@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: crime-alert-app
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python app.py
+    plan: free

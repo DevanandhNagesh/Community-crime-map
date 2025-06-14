@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Report Incident</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+<body>
+    <div class="container mt-3">
+        <div class="card p-4">
+            <h2>Report Incident</h2>
+            {% if error %}
+            <div class="alert alert-danger">{{ error }}</div>
+            {% endif %}
+            <form method="POST" enctype="multipart/form-data" onsubmit="return checkLocationSelected();">
+                <input class="form-control" name="type" placeholder="Type (e.g. Theft, Suspicious)" required>
+                <input class="form-control" name="location" placeholder="Location/Address" required>
+                <textarea class="form-control" name="description" placeholder="Description" required></textarea>
+                <input class="form-control" type="file" name="media">
+                <small class="form-text text-muted mb-2">(Optional) Add a photo or video</small>
+                <!-- Hidden fields for lat/lng -->
+                <input type="hidden" name="lat" id="lat">
+                <input type="hidden" name="lng" id="lng">
+                <button class="btn btn-info mb-2 w-100" type="button" onclick="setCurrentLocation()">Use My Current Location</button>
+                <button class="btn btn-primary w-100" type="submit">Submit</button>
+                <a href="/" class="btn btn-link w-100 mt-2">Back</a>
+            </form>
+            <div id="map" style="height: 300px;"></div>
+            <div id="location-warning" class="text-warning mt-2" style="display:none;">
+                Please select a location on the map or use your current location.
+            </div>
+        </div>
+    </div>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map').setView([20.5937, 78.9629], 5);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19
+        }).addTo(map);
+
+        var marker;
+
+        // Map click to set location
+        map.on('click', function(e) {
+            if (marker) map.removeLayer(marker);
+            marker = L.marker(e.latlng).addTo(map);
+            document.getElementById('lat').value = e.latlng.lat;
+            document.getElementById('lng').value = e.latlng.lng;
+            document.getElementById('location-warning').style.display = 'none';
+        });
+
+        // Use current location
+        function setCurrentLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var lat = position.coords.latitude;
+                    var lng = position.coords.longitude;
+                    document.getElementById('lat').value = lat;
+                    document.getElementById('lng').value = lng;
+                    if (marker) map.removeLayer(marker);
+                    marker = L.marker([lat, lng]).addTo(map);
+                    map.setView([lat, lng], 15);
+                    document.getElementById('location-warning').style.display = 'none';
+                }, function(error) {
+                    alert("Unable to access your location.");
+                });
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        // Prevent form submission if no location is selected
+        function checkLocationSelected() {
+            var lat = document.getElementById('lat').value;
+            var lng = document.getElementById('lng').value;
+            if (!lat || !lng) {
+                document.getElementById('location-warning').style.display = 'block';
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>

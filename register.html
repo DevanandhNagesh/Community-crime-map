@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register - Crime Alert</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card p-4">
+            <h2>Register</h2>
+            <form method="POST">
+                <input class="form-control" name="name" placeholder="Name" required>
+                <input class="form-control" name="email" type="email" placeholder="Email" required>
+                <input class="form-control" name="password" type="password" placeholder="Password" required>
+                <input class="form-control" name="phone" placeholder="Phone" required>
+                <input class="form-control" name="address" placeholder="Address (optional)">
+                <button class="btn btn-primary w-100" type="submit">Register</button>
+                <a href="/login" class="btn btn-link w-100 mt-2">Login</a>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
