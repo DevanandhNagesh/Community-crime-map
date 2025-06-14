@@ -1,29 +1,43 @@
-Real-Time Community Crime Alert & Safety Map
+# Real-Time Community Crime Alert & Safety Map
 
-A Real-Time Community Crime Alert & Safety Map is a web application designed to empower citizens and local authorities to report, track, and respond to crime and safety incidents as they happen. The platform leverages real-time data, geolocation, and community participation to improve public safety, reduce response times, and foster a collaborative approach to neighborhood security. Users can sign up, report incidents, receive alerts, and interact with local law enforcement and community members.
+## Features
 
--> Features
+- Register/Login with modern, branded UI
+- Light mode & dark mode toggle (persistent across all pages)
+- Report incidents (with map, media upload, and location selection)
+- Live map of incidents with custom marker icons
+- Toggle to show only verified incidents on the map and in the recent list
+- Recent incidents sidebar with quick map centering
+- Community chat
+- SOS emergency button
+- Admin panel for incident verification (verify/unverify incidents)
+- Only verified incidents are shown when the toggle is active
+- Responsive, mobile-friendly design
+- Social login UI (Google/Facebook, placeholder)
 
-Register/Login
-Report incidents (with map, media)
-Live map of incidents
-Community chat
-SOS button
-Admin panel for verification
--> Local Setup
+## UI/UX Improvements
 
-Install Python 3.8+
+- Professional, modern design system
+- Custom SVG logo and branding
+- Compact, accessible forms with validation
+- Animated transitions and feedback
+- Consistent theme and color palette
 
-Install dependencies:
+## Local Setup
 
-pip install -r backend/requirements.txt
+1. **Install Python 3.8+**
+2. **Install dependencies:**
+   ```
+   pip install -r requirements.txt
+   ```
+3. **Run the app:**
+   ```
+   python app.py
+   ```
+4. **Open your browser:**  
+   Go to [http://127.0.0.1:10000](http://127.0.0.1:10000)
 
-Run the app:
+- **Admin login:**  
+  Email: `admin@admin.com`  
+  Password: `admin123`
 
-python app.py
-
-Open your browser:
-Go to http://127.0.0.1:10000
-
-Admin login: Email: admin@admin.com
-Password: admin123
