@@ -3,13 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crime Alert Map</title>
+    <title>Login - Crime Alert Map</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="/static/css/styles.css">
     <style>
+        .form-check-input[type="checkbox"] {
+            width: 1.1em;
+            height: 1.1em;
+            margin-top: 0.2em;
+        }
+        .remember-forgot-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .forgot-link {
+            font-size: 0.95em;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        .forgot-link:hover {
+            text-decoration: underline;
+        }
         .theme-toggle.fixed-bottom {
             position: fixed !important;
             bottom: 2rem;
@@ -21,95 +39,53 @@
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg">
-        <div class="container">
-            <a class="navbar-brand" href="/">
-                <i class="bi bi-shield-check me-2"></i>Crime Alert Map
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/report">
-                            <i class="bi bi-plus-circle me-1"></i>Report
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/chat">
-                            <i class="bi bi-chat-dots me-1"></i>Chat
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/sos">
-                            <i class="bi bi-exclamation-triangle me-1"></i>SOS
-                        </a>
-                    </li>
-                    {% if current_user.is_admin %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="/admin">
-                            <i class="bi bi-gear me-1"></i>Admin
-                        </a>
-                    </li>
-                    {% endif %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="/logout">
-                            <i class="bi bi-box-arrow-right me-1"></i>Logout
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Main Content -->
-    <div class="container mt-4">
-        <div class="row">
-            <!-- Map Section -->
-            <div class="col-lg-8">
-                <div class="card p-4 fade-in">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h2 class="h4 mb-0">Community Safety Map</h2>
-                        <div class="btn-group">
-                            <button class="btn btn-sm btn-outline-light" id="refreshMap">
-                                <i class="bi bi-arrow-clockwise"></i>
-                            </button>
-                            <button class="btn btn-sm btn-outline-light" id="toggleHeatmap">
-                                <i class="bi bi-fire"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div id="map" style="height: 600px;"></div>
-                </div>
+    <div class="auth-container">
+        <div class="auth-card position-relative">
+            <div class="auth-logo">
+                <img src="/static/img/logo.svg" alt="Crime Alert Map Logo">
+                <h1>Crime Alert Map</h1>
+                <p class="text-muted">Community Safety Platform</p>
             </div>
 
-            <!-- Sidebar -->
-            <div class="col-lg-4">
-                <!-- Quick Actions -->
-                <div class="card p-4 mb-4 fade-in">
-                    <h3 class="h5 mb-3">Quick Actions</h3>
-                    <div class="d-grid gap-2">
-                        <a href="/report" class="btn btn-primary">
-                            <i class="bi bi-plus-circle me-2"></i>Report Incident
-                        </a>
-                        <a href="/chat" class="btn btn-success">
-                            <i class="bi bi-chat-dots me-2"></i>Community Chat
-                        </a>
-                        <a href="/sos" class="btn btn-danger">
-                            <i class="bi bi-exclamation-triangle me-2"></i>Emergency SOS
-                        </a>
-                    </div>
+            <form class="auth-form" method="POST" action="/login">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" class="form-control" required>
                 </div>
 
-                <!-- Recent Incidents -->
-                <div class="card p-4 fade-in">
-                    <h3 class="h5 mb-3">Recent Incidents</h3>
-                    <div id="recentIncidents" class="list-group list-group-flush">
-                        <!-- Incidents will be populated by JavaScript -->
-                    </div>
+                <div class="form-group mb-1">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" class="form-control" required>
                 </div>
+
+                <div class="remember-forgot-row">
+                    <div class="form-check" style="margin-bottom:0;">
+                        <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                        <label class="form-check-label" for="remember" style="font-size:0.97em;">Remember me</label>
+                    </div>
+                    <a href="/forgot-password" class="forgot-link">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="btn btn-primary mb-2 w-100">
+                    <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
+                </button>
+            </form>
+
+            <div class="auth-divider">
+                <span>or</span>
+            </div>
+
+            <div class="social-login">
+                <button class="btn btn-outline-secondary w-100 mb-2" type="button">
+                    <i class="bi bi-google me-2"></i>Continue with Google
+                </button>
+                <button class="btn btn-outline-secondary w-100" type="button">
+                    <i class="bi bi-facebook me-2"></i>Continue with Facebook
+                </button>
+            </div>
+
+            <div class="auth-links mt-4">
+                Don't have an account? <a href="/register">Sign up</a>
             </div>
         </div>
     </div>
@@ -119,11 +95,7 @@
         <i class="bi bi-moon-fill"></i>
     </button>
 
-    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
-    <script src="/static/js/main.js"></script>
     <script>
         // Theme Toggle
         const themeToggle = document.getElementById('themeToggle');
