@@ -46,8 +46,27 @@ def home():
 def register():
     if request.method == 'POST':
         data = request.form
+        
+        # Validate passwords match
+        if data['password'] != data['confirm_password']:
+            return render_template('register.html', error="Passwords do not match")
+            
+        # Validate terms accepted
+        if 'terms' not in data:
+            return render_template('register.html', error="You must accept the terms and conditions")
+            
+        # Check if email already exists
+        if User.query.filter_by(email=data['email']).first():
+            return render_template('register.html', error="Email already registered")
+            
         hashed_pw = generate_password_hash(data['password'])
-        user = User(name=data['name'], email=data['email'], password=hashed_pw, phone=data['phone'], address=data.get('address', ''))
+        user = User(
+            name=data['name'],
+            email=data['email'],
+            password=hashed_pw,
+            phone=data.get('phone', ''),
+            address=data.get('address', '')
+        )
         db.session.add(user)
         db.session.commit()
         return redirect(url_for('login'))
